@@ -58,6 +58,7 @@ fun Slideshow(captions: Array<String>, modifier: Modifier = Modifier) {
     var page by remember{mutableIntStateOf(0)}
     var pageInput by remember{mutableStateOf("")}
     val images = listOf(R.drawable.honey_bee,R.drawable.bumblebee,R.drawable.stingless_bee,R.drawable.carpenter_bee,R.drawable.leafcutter_bee)
+    var valid by remember{mutableStateOf(false)}
     Column(
         modifier = modifier.fillMaxSize().background(Color(0xFFffd447)),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -94,25 +95,39 @@ fun Slideshow(captions: Array<String>, modifier: Modifier = Modifier) {
                 Text(text = stringResource(R.string.next))
             }
         }
-        Column(modifier = modifier) {
+        Column(modifier = modifier,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center) {
             Text(
                 text = "Jump to image: ",
                 fontSize = 16.sp,
                 modifier = modifier.align(Alignment.CenterHorizontally)
             )
-            OutlinedTextField(
-                value = pageInput,
-                onValueChange = { input ->
-                    pageInput = input
-                    val inputInt = input.toIntOrNull()
-                    if (inputInt != null && inputInt in 1..5) {
-                        page = inputInt - 1
-                    }
-                },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
-                singleLine = true,
-                modifier = modifier.height(50.dp).width(50.dp).align(Alignment.CenterHorizontally)
-            )
+            Row(modifier = modifier) {
+                OutlinedTextField(
+                    value = pageInput,
+                    onValueChange = { input ->
+                        pageInput = input
+                        val inputInt = input.toIntOrNull()
+                        valid = inputInt != null && inputInt in 1..5
+                        },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number,
+                        imeAction = ImeAction.Done
+                    ),
+                    singleLine = true,
+                    modifier = modifier.height(50.dp).width(50.dp)
+                )
+                Button(
+                    onClick = {if (valid) {page = pageInput.toInt() - 1}},
+                    modifier = modifier.width(100.dp)
+                ) {
+                    Text(
+                        text = "Go",
+                        fontSize = 16.sp
+                    )
+                }
+            }
         }
     }
 }

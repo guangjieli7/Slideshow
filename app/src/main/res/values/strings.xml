@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Slideshow</string>
+    <string-array name ="captions_array">
+        <item>A honey bee.</item>
+        <item>A bumblebee.</item>
+        <item>A stingless bee.</item>
+        <item>A carpenter bee.</item>
+        <item>A leafcutter bee.</item>
+    </string-array>
+    <string name="previous">Previous Image</string>
+    <string name="next">Next Image</string>
+</resources>
